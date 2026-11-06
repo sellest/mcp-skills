@@ -57,7 +57,7 @@ class SkillStore:
             raise SkillError(f"Skill {name!r} is not registered; call list_skills to see skills")
         return versions[-1], self.root / name / f"v{versions[-1]}"
 
-    def list(self) -> list[SkillInfo]:
+    def skills(self) -> list[SkillInfo]:
         skills = []
         for entry in sorted(self.root.iterdir()):
             if not entry.is_dir() or not NAME_RE.fullmatch(entry.name):
