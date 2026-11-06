@@ -12,7 +12,7 @@ def test_register_and_read(store):
     assert store.read("demo") == (1, files["SKILL.md"])
     assert store.read("demo", "references/a.md") == (1, "# A\n")
     assert store.files("demo") == (1, ["SKILL.md", "references/a.md"])
-    [info] = store.list()
+    [info] = store.skills()
     assert (info.name, info.version) == ("demo", 1)
     assert info.description.startswith("Does a thing")
 
@@ -20,7 +20,7 @@ def test_register_and_read(store):
 def test_new_version_keeps_old_ones(store):
     store.register("demo", {"SKILL.md": skill_md("demo", "first"), "old.md": "x"})
     assert store.register("demo", {"SKILL.md": skill_md("demo", "second")}) == 2
-    assert store.list()[0].description == "second"
+    assert store.skills()[0].description == "second"
     assert store.files("demo") == (2, ["SKILL.md"])
     with pytest.raises(SkillError, match="no file"):
         store.read("demo", "old.md")
@@ -43,7 +43,7 @@ def test_text_is_stored_byte_for_byte(store):
 def test_failed_registration_leaves_nothing(store):
     with pytest.raises(SkillError):
         store.register("demo", {"SKILL.md": "no front matter"})
-    assert store.list() == []
+    assert store.skills() == []
     assert not (store.root / "demo").exists()
 
 
@@ -71,7 +71,7 @@ def test_list_ignores_junk(store):
     (store.root / "broken" / "v1" / "SKILL.md").write_text("garbage", encoding="utf-8")
     (store.root / "demo" / ".tmp-abc").mkdir()
     (store.root / "notes.txt").write_text("x", encoding="utf-8")
-    assert [s.name for s in store.list()] == ["demo"]
+    assert [s.name for s in store.skills()] == ["demo"]
     assert store.read("demo")[0] == 1
 
 

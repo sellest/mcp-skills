@@ -60,7 +60,7 @@ def build_server(store: SkillStore, *, admin: bool) -> FastMCP:
     def list_skills() -> dict:
         skills = [
             {"name": s.name, "description": s.description, "version": s.version}
-            for s in store.list()
+            for s in store.skills()
         ]
         return {"skills": skills}
 

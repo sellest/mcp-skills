@@ -99,4 +99,4 @@ def test_http_endpoints(store):
             id_=3,
         )
         assert "error" in called or called["result"].get("isError")
-        assert [s.name for s in store.list()] == ["demo"]
+        assert [s.name for s in store.skills()] == ["demo"]
