@@ -17,3 +17,4 @@ config/local*.yaml
 *.pem
 .idea/
 .vscode/
+.claude/
