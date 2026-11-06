@@ -24,13 +24,14 @@ INSTRUCTIONS = (
 )
 
 LIST_DESCRIPTION = (
-    "List the registered skills with their name, description and current version. "
-    "Call this before starting any task, and again whenever the topic changes: if a skill's "
+    "Check this before any task: lists skills (task instructions) with name, description, version. "
+    "Call it again whenever the topic changes: if a skill's "
     "description fits the task, load it with get_skill and follow it instead of improvising."
 )
 
 GET_DESCRIPTION = (
-    "Return the text of a skill. With only a name it returns SKILL.md, the skill's main "
+    "Load a skill's instructions (SKILL.md or a linked .md file) and follow them for the task. "
+    "With only a name it returns SKILL.md, the skill's main "
     "instructions: read them fully and follow them for the task. SKILL.md may link to other "
     ".md files of the same skill (for example references/index.md); pass that relative path "
     "as 'path' to read one. The result also lists all files of the skill."

@@ -27,8 +27,11 @@ async def test_read_only_server_hides_register(store):
 async def test_descriptions_tell_the_model_to_check_skills(store):
     async with Client(build_server(store, admin=False)) as client:
         tools = {tool.name: tool for tool in await client.list_tools()}
-    assert "before starting any task" in tools["list_skills"].description.lower()
-    assert "follow" in tools["get_skill"].description.lower()
+    # Gateways may show only the first sentence (<= 100 chars), so it must carry the hint.
+    first = {name: tool.description.split(". ")[0] for name, tool in tools.items()}
+    assert all(len(sentence) <= 100 for sentence in first.values()), first
+    assert "before any task" in first["list_skills"].lower()
+    assert "follow" in first["get_skill"].lower()
     assert tools["list_skills"].annotations.readOnlyHint is True
 
 
